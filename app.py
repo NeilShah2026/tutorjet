@@ -7,6 +7,7 @@ from forms import *
 
 #other dependencies
 import time
+import random
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -148,26 +149,51 @@ def becometutor():
 @is_loggin_in
 def todo():
     form = ToDoForm(request.form)
-    tasks = Table('todo', 'email', 'task')
+    tasks = Table('todo', 'email', 'task', 'code')
     email = session['email']
     if request.method == 'POST' and form.validate():
         task = form.task.data
-        tasks.insert(email, task)
+        # random number to be used as a unique id
+        rand = random.randint(1, 1000000)
+        tasks.insert(email, task, rand)
 
 
         return redirect(url_for('todo'))
     # get all tasks where email = session email
     task_list = tasks.getall()
     # get all tasks where email = session email
+
     tasks = []
+    ids = []
+    # loop through all tasks and add the task to the list
     for task in task_list:
         if task.get('email') == email:
-            tasks.append(task)
+            tasks.append(task['task'])
+            ids.append(task['code'])
+    print(tasks)
+    return render_template('todo.html', form=form, tasks=tasks, ids=ids)
 
-    return render_template('todo.html', form=form, tasks=tasks)
+# @app.route('/todo/delete/<>', methods=['GET', 'POST'])
+# @is_loggin_in
+# def delete():
+
+#     tasks = Table('todo', 'email', 'task')
+#     email = session['email']
+#     if request.method == 'POST' and form.validate():
+#         task = form.task.data
+#         tasks.delete(email, task)
 
 
+#         return redirect(url_for('todo'))
+#     # get all tasks where email = session email
+#     task_list = tasks.getall()
+#     # get all tasks where email = session email
+#     tasks = []
+#     for task in task_list:
+#         if task.get('email') == email:
+#             tasks.append(task)
 
+#     return render_template('delete.html', form=form, tasks=tasks)
 
 if __name__ == '__main__':
     app.run(debug = True)
