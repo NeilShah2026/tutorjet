@@ -27,3 +27,7 @@ class BecomeTutor(Form):
     grade = SelectField('Grade', choices=[('K', 'K'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10'), ('11', '11'), ('12', '12')])
     email = StringField('Email', [validators.Length(min=6, max=50)])
     submit = SubmitField('Submit')
+
+class ToDoForm(Form):
+    task = StringField('Task', [validators.Length(min=1, max=50)])
+    submit = SubmitField('Submit')

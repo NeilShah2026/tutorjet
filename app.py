@@ -144,5 +144,30 @@ def becometutor():
 
     return render_template('becometutor.html', form=form)
 
+@app.route('/todo', methods=['GET', 'POST'])
+@is_loggin_in
+def todo():
+    form = ToDoForm(request.form)
+    tasks = Table('todo', 'email', 'task')
+    email = session['email']
+    if request.method == 'POST' and form.validate():
+        task = form.task.data
+        tasks.insert(email, task)
+
+
+        return redirect(url_for('todo'))
+    # get all tasks where email = session email
+    task_list = tasks.getall()
+    # get all tasks where email = session email
+    tasks = []
+    for task in task_list:
+        if task.get('email') == email:
+            tasks.append(task)
+
+    return render_template('todo.html', form=form, tasks=tasks)
+
+
+
+
 if __name__ == '__main__':
     app.run(debug = True)

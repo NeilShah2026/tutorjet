@@ -18,19 +18,21 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <button type="button" onclick="window.location.href='/requesttutor'" class="btn btn-info">Request A Tutor</button>
-                </li>
+              <li class="nav-item">
+                <button type="button" onclick="window.location.href='/dashboard'" class="btn btn-info">Back</button>
+              </li>
               &nbsp;
               &nbsp;
+              
               <li class="nav-item">
                 <button type="button" onclick="window.location.href='/becometutor'" class="btn btn-info">Become A Tutor</button>
               </li>
               &nbsp;
               &nbsp;
               <li class="nav-item">
-                <button type="button" onclick="window.location.href='/todo'" class="btn btn-info">Todo</button>
+                <button type="button" onclick="window.location.href='/requesttutor'" class="btn btn-info">Request A Tutor</button>
               </li>
+              
                 
             </ul>
             <button type="button" onclick="window.location.href='/logout'" class="btn btn-info">Logout</button>
@@ -38,9 +40,17 @@
         </div>
       </nav>
     </br>
-<div style="padding-left:16px">
-  <h1>Dashboard</h1>
-</div>
+<form action="" method=post>
+    {{ form.task.label }}
+    {{ form.task }}
+    </br>
+    </br>
+    {{ form.submit }}
+</form>
 
-</body>
-</html>
+
+<ul>
+    {% for task in tasks %}
+        <li>{{ task.task }}</li>
+    {% endfor %}
+</ul>

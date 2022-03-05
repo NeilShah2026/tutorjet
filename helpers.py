@@ -131,5 +131,4 @@ def requestTutor(grade, subject, description, email):
 
     #send email to all tutors who teach the subject
     for tutor in tutors:
-        send_email(tutor, "You have a new request!", "You have a new request for a tutor!\n\nGrade: %s\nSubject: %s\nDescription: %s\nStudent Email: %" %(grade, subject, description, email))
-        print('email sent to %s' %tutor)
+        send_email(tutor, f"You have a new request!", "You have a new request for a tutor!\n\nGrade: %s\nSubject: %s\nDescription: %s\nStudent Email: %s" %(grade, subject, description, email))
